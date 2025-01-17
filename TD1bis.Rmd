@@ -149,4 +149,43 @@ choose(n, 5)*p^5*(1-p)^(n-5)
 choose(n, 6)*p^6*(1-p)^(n-6)
 choose(n, 7)*p^7*(1-p)^(n-7)
 ```
+ 7. Afficher la loi binomiale X
  
+```{r}
+val = c(0:20)
+x <- dbinom(val, n, p)
+barplot(x, legend.text="loi B(20, 0.3)", names.arg = val, space = 3, axes = TRUE, ylim = c(0, 0.2))
+```
+ 
+7. Fonction de répartition de la loi binomiale
+
+```{r}
+pbinom(1, n, p)
+```
+```{r}
+curve(pbinom(x, n, p), from = 0, to = 20, n=5000)
+```
+
+9. Fonction quantile pour trouver Q1 et Q3
+
+```{r}
+curve(qbinom(x, n, p), from = 0, to = 1, n=5000)
+```
+
+```{r}
+mediane <- qbinom(0.5, n, p)
+q1 <- qbinom(0.25, n, p)
+q3 <- qbinom(0.75, n, p)
+d1 <- qbinom(0.1, n, p)
+d9 <- qbinom(0.9, n, p)
+Iq <- q3 - q1
+Id <- d9 - d1
+d1
+q1 
+mediane
+q3
+d9
+print(paste("intervalle interquartile ", Iq))
+print(paste("intervalle interdecile ", Id))
+```
+
