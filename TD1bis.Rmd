@@ -1,0 +1,152 @@
+---
+title: "Maths pour les données"
+output: html_notebook
+---
+
+# Leo Donati
+## TDI
+
+### Dénombrement
+
+#### Exercice 1 : anagrammes
+
+Le nombre d'anagrammes que l'on peut faire avec les lettres du mot MATHS est égal à 5! = 120.
+
+```{r}
+factorial(5)
+```
+Pour le mot DONNEES, le nombre d'anagrammes est : 7!/(2!)^2 = 1260.
+```{r}
+factorial(7)/factorial(2)^2
+```
+#### Exercice 2 : simplification de factorielles
+
+\[
+A = \frac{(n+1)!}{n! (n-3)} = \frac{n+1}{n-3}
+\]
+
+**Rappel** sur le *coefficient binomial* : \(\binom{n}{k} = \frac{n!}{k!(n-k)!}\)
+
+\[
+B = \frac{n}{4}
+\]
+
+\[
+C = 1
+\]
+
+\[
+D = \frac{(n-1)(n-2)}{6} = \frac{n^2 - 3n + 2}{6}
+\]
+
+#### Exerice 3 : combinaison
+
+Le nombre de **combinaisons** de 5 éléments parmi 10 est donné par \(\binom{10}{5} = \frac{10!}{5!5!} = 252\).
+
+```{r}
+choose(10,5)
+```
+**Remarque :** à ne pas confondre avec le nombre de façon de choisir dans l'ordre 5 éléments parmi 10, qui est donné par \(10!/(10-5)! = 30240\). Ce nombre s'appelle le nombre de **permutations** de 5 éléments parmi 10.
+```{r}
+factorial(10)/factorial(5)
+```
+
+#### Exercice 4 : applications
+
+Le nombre de façon de distribuer 10 bonbons différents à 4 enfants est donné par \(4^{10} = 1048576\).
+
+En effet, chaque façon de distribuer les enfants correspond à une application de l'ensemble des bonbons vers l'ensemble des enfants.
+
+On note \(E\) l'ensemble des bonbons et \(F\) l'ensemble des enfants. On a \(card(E) = 10\) et \(card(F) = 4\).
+
+Alors \(E^F\) est l'ensemble des applications de \(E\) vers \(F\), et on a :
+
+**Rappel**
+\[
+card(E^F) = card(E)^{card(F)}
+\]
+
+```{r}
+4^10
+1024^2
+```
+### lois discrètes usuelles
+
+#### Exercice 5 : loi binomiale
+
+J'ai simulé le tirage aléatoire de 1000 variables aléatoires suivant une loi binomiale de paramètres \(n = 20\) et \(p = 0.3\).
+
+```{r}
+n <- 20
+p <- 0.3
+bin <- rbinom(1000, n, p)
+plot(bin)
+```
+1. Pour savoir le nombre de fois où la valeur 5 apparaît dans le tirage :
+
+```{r}
+sum(bin == 5)
+```
+En terme de fréquence le 5 apparaît 16,7% des fois.
+
+2. Pour connaître le nombre d'occurence de chaque modalité j'utilise la commancde ``table``
+
+```{r}
+table(bin)
+```
+
+```{r}
+table(bin)/1000
+```
+3. moyenne et ecart type empirques sur bin
+
+```{r}
+mean(bin)
+sd(bin)
+```
+Summary résume les données sur un tableau
+
+```{r}
+summary(bin)
+
+```
+Vérifions le premier quartile
+
+```{r}
+sum(bin <= 7)
+```
+
+
+Espérance et ecart-type d'une loi \(B(n,p)\) sont donnés par :
+\[E(X) = np\]
+\[\sigma(X) = \sqrt{np(1-p)}\]
+
+```{r}
+n*p
+sqrt(n*p*(1-p))
+```
+4. Histogramme des valeurs du tableau bin
+
+```{r}
+hist(bin)
+barplot(table(bin)/1000, legend.text="1000 tirages de B(20, 0.3)", space = 3, axes = TRUE)
+```
+5. Probabilité théorique du 5, 6 et 7
+ pour X
+ 
+```{r}
+val = c(5, 6, 7)
+dbinom(val, n, p)
+y <- table(bin)/1000
+y[5:7]
+
+
+```
+ 6. vérifions les calculs de dbino
+ 
+```{r}
+choose(n, 5)*p^5*(1-p)^(n-5)
+choose(n, 6)*p^6*(1-p)^(n-6)
+choose(n, 7)*p^7*(1-p)^(n-7)
+```
+ 

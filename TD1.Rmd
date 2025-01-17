@@ -1,0 +1,121 @@
+---
+title: "Maths des Données - TD1"
+output: html_notebook
+---
+
+# leo Donati
+
+## 15 janveir 2025
+
+### Partie 1 : dénombrement
+
+##### Exercice 1
+
+Avec les lettres  MATHS le nombre d'anagrammes est de 5! = 120
+
+```{r}
+factorial(5)
+```
+Avec les lettres du mot DONNEES le nombre d'anagrammes est de 7!/(2!)^2
+
+```{r}
+factorial(7)/(factorial(2)*factorial(2))
+```
+
+##### Exercice 2
+
+Simplifications d'expressions avec des factorielles
+
+\[
+A = \frac{n+1}{n-3}
+\]
+\[
+B = \frac{n}{4}
+\]
+\[
+C = 1
+\]
+\[
+D = \frac{(n-1)(n-2)}{6} = \frac{n^2-3n+2}{6}
+\]
+
+##### Exercice 3
+
+Combien de combinaisons de 5 éléments peut-on former avec un ensemble de 10 éléments ? Donner la valeur numérique.
+
+\[
+{10\choose 5}  = C_{10}^5 = \frac{10!}{5!5!} = 252
+\]
+
+```{r}
+choose(10,5)
+```
+
+
+#### Exercice 4
+
+Combien de façons y a-t-il de distribuer 10 bonbons (différents) à 4 enfants ?
+
+Il y en a autant que le nombre d'applications entre un ensemble de 10 éléments (les bonbons) et un ensemble de 4 éléments (les enfants), soit $4^{10} = 1024^2 \approx 1000000$
+
+```{r}
+4^10
+```
+
+### Lois de probabilités discrètes
+
+#### Exercice 4
+
+```{r}
+n <- 20
+p <- 0.3
+bin <- rbinom(1000, n, p)
+```
+
+Voyons les valeurs tirées au hasard
+
+```{r}
+bin
+```
+
+```{r}
+plot(bin)
+```
+1. Pour savoir le nombre de fois où la valeur 5 apparaît dans le tableu bin :
+
+```{r}
+sum(bin == 5)
+```
+2. Pour connaître les effectifs de chaque valeur dans mon tirage aléatoire
+
+```{r}
+table(bin)
+```
+
+Et si l'on veut les fréquences :
+```{r}
+table(bin)/1000
+```
+
+3. La moyenne et l'écart-type empirique sont :
+
+```{r}
+mean(bin)
+sd(bin)
+```
+
+Pour avoir un résumé statistique complet :
+
+```{r}
+summary(bin)
+```
+
+
+4. L'histogramme des valeurs est donné par 
+
+```{r}
+hist(bin)
+```
+
+
+
